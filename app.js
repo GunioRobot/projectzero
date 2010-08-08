@@ -16,21 +16,27 @@ function bye()
 
 function incomingData(data)
 {
-	if ()
+	data = data.trim();
+
+	switch(data)
 	{
-		this.end()	
+		case "exit": this.write("end ok. closing connection."); this.end(); break;
+		default : this.write("unkown\n"); break;
 	}
 
-	this.write("YAY new data. thx. u are nr "+users+"\r\n");
-	sys.puts(" - "+data+"\r\n");
+
+//	this.write("YAY new data. thx. u are nr "+users+"\r\n");
+	sys.puts(data);
 }
 
 
-net.createServer(function (socket) {
-
+function newConnection (socket)
+{
   socket.setEncoding("utf8");
 
-	users++;
+        users++;
+
+
 
   socket.write("Echo server 1.0 yay me :D \r\n");
 
@@ -39,8 +45,11 @@ net.createServer(function (socket) {
   socket.on("end", function () {
 
     socket.end();
-	users--;
+        users--;
   });
 
-}).listen(settings.net.port);
+
+}
+
+net.createServer(newConnection).listen(settings.net.port);
 

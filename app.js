@@ -1,4 +1,4 @@
-var net = require('net');
+	var net = require('net');
 var sys = require('sys');
 
 var settings = {
@@ -8,25 +8,43 @@ var settings = {
 }
 
 var users = 0;
-
-
-function bye()
-{
-} 
+ 
 
 function incomingData(data)
 {
-	data = data.trim();
-
-	switch(data)
+	//convert the input from JSON
+	
+	try
 	{
-		case "exit": this.write("end ok. closing connection."); this.end(); break;
-		default : this.write("unkown\n"); break;
+		var input = JSON.parse(data.trim());		
+		console.dir(input);
+	}
+	catch(e)
+	{
+		console.log(e);
+		this.write("badly formatter input. I want JSON!");
+		//stubbing the input
+		return false;
+	}
+	// and we have input!
+	
+	// The JSON i expect will have a simple format : {action:"actionverb",[arguments]} . 
+	// I shy away from calling this an RPC system, as the action is not going to map directly to a method that will be executed.
+	switch(input['action'])
+	{
+		case "thrust": 
+			this.write("vroom vroom!");
+			break;
+		
+		case "message":
+			this.write("Ground Control To Major Tom!");
+			break;
+		
+		default: 
+			this.write("unknown command");
+			break;
 	}
 
-
-//	this.write("YAY new data. thx. u are nr "+users+"\r\n");
-	sys.puts(data);
 }
 
 

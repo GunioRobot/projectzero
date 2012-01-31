@@ -8,15 +8,15 @@ var settings = {
 }
 
 var users = 0;
- 
+
 
 function incomingData(data)
 {
 	//convert the input from JSON
-	
+
 	try
 	{
-		var input = JSON.parse(data.trim());		
+		var input = JSON.parse(data.trim());
 		console.dir(input);
 	}
 	catch(e)
@@ -27,20 +27,20 @@ function incomingData(data)
 		return false;
 	}
 	// and we have input!
-	
-	// The JSON i expect will have a simple format : {action:"actionverb",[arguments]} . 
+
+	// The JSON i expect will have a simple format : {action:"actionverb",[arguments]} .
 	// I shy away from calling this an RPC system, as the action is not going to map directly to a method that will be executed.
 	switch(input['action'])
 	{
-		case "thrust": 
+		case "thrust":
 			this.write("vroom vroom!");
 			break;
-		
+
 		case "message":
 			this.write("Ground Control To Major Tom!");
 			break;
-		
-		default: 
+
+		default:
 			this.write("unknown command");
 			break;
 	}
